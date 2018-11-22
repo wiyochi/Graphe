@@ -3,7 +3,7 @@
 #include "Node.hpp"
 #include "Graph.hpp"
 
-enum mode
+enum Mode
 {
     ADD_NODE,
     SELECTION
@@ -15,7 +15,12 @@ int main()
     std::vector<Graph*> graphs;
     graphs.push_back(new Graph());
     int iGraph = 0;
-    mode m = ADD_NODE;
+    Mode mode = ADD_NODE;
+    graphs[iGraph]->addNode(100, 100);
+    sf::CircleShape mouseCenter;
+    mouseCenter.setRadius(5);
+    mouseCenter.setFillColor(sf::Color::Red);
+    mouseCenter.setPosition(80, 20);
 
     while (window.isOpen())
     {
@@ -24,16 +29,15 @@ int main()
         {
             if (event.type == sf::Event::Closed || (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape))
                 window.close();
+            /*
             else if(event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
             {
-                switch(m)
+                switch(mode)
                 {
                 case ADD_NODE:
                     graphs[iGraph]->addNode(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
                 case SELECTION:
                     break;
-                default:
-                    
                 }
             }
             else if(event.type == sf::Event::KeyReleased)
@@ -53,8 +57,24 @@ int main()
                     iGraph = (iGraph - 1) < 0 ? graphs.size()-1 : (iGraph - 1);
                     std::cout << "Changement sur le graphe " << graphs[iGraph]->getID() << std::endl;
                 }
+                else if(event.key.code == sf::Keyboard::Numpad0)
+                {
+                    mode = SELECTION;
+                    std::cout << "Mode Selection" << std::endl;
+                }
+                else if(event.key.code == sf::Keyboard::Numpad1)
+                {
+                    mode = ADD_NODE;
+                    std::cout << "Mode Add" << std::endl;
+                }
             }
+            */
 
+        }
+
+        for(auto g : graphs)
+        {
+            g->update(window);
         }
 
         window.clear();

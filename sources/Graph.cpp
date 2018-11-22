@@ -23,6 +23,14 @@ void Graph::addNode(int x, int y)
             << std::endl;
 }
 
+void Graph::update(sf::Window& window)
+{
+    for(auto node : m_nodes)
+    {
+        node->update(window);
+    }
+}
+
 std::size_t Graph::getNodeCount() const
 {
     return m_nodes.size();
@@ -31,6 +39,11 @@ std::size_t Graph::getNodeCount() const
 int Graph::getID() const
 {
     return m_ID;
+}
+
+Node* Graph::operator[](int index)
+{
+    return m_nodes[index];
 }
 
 

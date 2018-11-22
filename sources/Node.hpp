@@ -1,6 +1,10 @@
 #ifndef NODE_H
 #define NODE_H
 
+#define PT(n,x,y) n << "(" << x << "," << y << ")"
+
+#include <math.h>
+#include <iostream>
 #include <SFML/Graphics.hpp>
 
 class Node : public sf::Drawable
@@ -8,10 +12,12 @@ class Node : public sf::Drawable
 public:
     Node(int x, int y);
     ~Node();
-    static int nodeNumber;
+    void update(sf::Window& window);
+    bool containPoint(int x, int y);
 
 private:
     sf::CircleShape m_shape;
+    bool m_dragged;
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

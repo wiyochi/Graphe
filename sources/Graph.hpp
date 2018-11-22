@@ -12,8 +12,11 @@ public:
     Graph();
     ~Graph();
     void addNode(int x, int y);
+    void update(sf::Window& window);
     std::size_t getNodeCount() const;
     int getID() const;
+
+    Node* operator[](int index);
 
     static int graphNumber;
 
