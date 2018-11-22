@@ -1,11 +1,21 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Node.hpp"
+#include "Graph.hpp"
+
+enum mode
+{
+    ADD_NODE,
+    SELECTION
+};
 
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(500, 500), "Graphe");
-    std::vector<Node*> nodes;
+    std::vector<Graph*> graphs;
+    graphs.push_back(new Graph());
+    int iGraph = 0;
+    mode m = ADD_NODE;
 
     while (window.isOpen())
     {
@@ -16,20 +26,42 @@ int main()
                 window.close();
             else if(event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
             {
-                nodes.push_back(new Node(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y));
-                std::cout << "Ajout Node: " << sf::Mouse::getPosition(window).x\
-                                            << "," << sf::Mouse::getPosition(window).y\
-                                            << " : "
-                                            << Node::nodeNumber
-                                            << std::endl;
+                switch(m)
+                {
+                case ADD_NODE:
+                    graphs[iGraph]->addNode(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y);
+                case SELECTION:
+                    break;
+                default:
+                    
+                }
             }
+            else if(event.type == sf::Event::KeyReleased)
+            {
+                if(event.key.code == sf::Keyboard::N)
+                {
+                    graphs.push_back(new Graph());
+                    iGraph = graphs.size()-1;
+                }
+                else if(event.key.code == sf::Keyboard::Right)
+                {
+                    iGraph = (iGraph + 1)%graphs.size();
+                    std::cout << "Changement sur le graphe " << graphs[iGraph]->getID() << std::endl;
+                }
+                else if(event.key.code == sf::Keyboard::Left)
+                {
+                    iGraph = (iGraph - 1) < 0 ? graphs.size()-1 : (iGraph - 1);
+                    std::cout << "Changement sur le graphe " << graphs[iGraph]->getID() << std::endl;
+                }
+            }
+
         }
 
         window.clear();
         
-        for(auto n : nodes)
+        for(auto g : graphs)
         {
-            window.draw(*n);
+            window.draw(*g);
         }
 
         window.display();
