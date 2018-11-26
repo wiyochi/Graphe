@@ -23,17 +23,37 @@ void Graph::addNode(int x, int y)
             << std::endl;
 }
 
+void Graph::addArc(int iNode1, int iNode2)
+{
+    m_arcs.push_back(new Arc(m_nodes[iNode1], m_nodes[iNode2], Arc::UNDIRECTED));
+    std::cout << "Ajout Arc (" << getID() << ") : "\
+            << iNode1\
+            << "," << iNode2\
+            << " : "\
+            << getArcCount()\
+            << std::endl;
+}
+
+std::size_t Graph::getNodeCount() const
+{
+    return m_nodes.size();
+}
+
+std::size_t Graph::getArcCount() const
+{
+    return m_arcs.size();
+}
+
 void Graph::update(sf::Window& window)
 {
     for(auto node : m_nodes)
     {
         node->update(window);
     }
-}
-
-std::size_t Graph::getNodeCount() const
-{
-    return m_nodes.size();
+    for(auto arc : m_arcs)
+    {
+        arc->update();
+    }
 }
 
 int Graph::getID() const
@@ -52,5 +72,10 @@ void Graph::draw(sf::RenderTarget& target, sf::RenderStates states) const
     for(auto n : m_nodes)
     {
         target.draw(*n, states);
+    }
+
+    for(auto a : m_arcs)
+    {
+        target.draw(*a, states);
     }
 }

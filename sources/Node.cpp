@@ -33,14 +33,18 @@ void Node::update(sf::Window& window)
 
 bool Node::containPoint(int x, int y)
 {
-    sf::Vector2f center = m_shape.getPosition();
-    center.x += m_shape.getRadius();
-    center.y += m_shape.getRadius();
+    sf::Vector2f center = getPosition();
 
     float distance = std::sqrt((center.x - x)*(center.x - x) + (center.y - y)*(center.y - y));
     std::cout << "Distance: " << PT("Center", center.x, center.y) << "&" << PT("Point", x, y) << std::endl;
     return (distance <= m_shape.getRadius());
 }
+
+sf::Vector2f Node::getPosition()
+{
+    return sf::Vector2f(m_shape.getPosition().x + m_shape.getRadius(), m_shape.getPosition().y + m_shape.getRadius());
+}
+
 
 void Node::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {

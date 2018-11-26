@@ -14,6 +14,7 @@ public:
     ~Node();
     void update(sf::Window& window);
     bool containPoint(int x, int y);
+    sf::Vector2f getPosition();
 
 private:
     sf::CircleShape m_shape;

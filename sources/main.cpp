@@ -17,10 +17,24 @@ int main()
     int iGraph = 0;
     Mode mode = ADD_NODE;
     graphs[iGraph]->addNode(100, 100);
+    graphs[iGraph]->addNode(50, 50);
+    graphs[iGraph]->addArc(0, 1);
+
     sf::CircleShape mouseCenter;
     mouseCenter.setRadius(5);
     mouseCenter.setFillColor(sf::Color::Red);
     mouseCenter.setPosition(80, 20);
+
+    sf::RectangleShape testEntity;
+    testEntity.setFillColor(sf::Color::White);
+    testEntity.setPosition(200, 200);
+    testEntity.setSize(sf::Vector2f(100, 2));
+    testEntity.setRotation(45.f);
+
+    sf::RectangleShape testEntity2;
+    testEntity2.setFillColor(sf::Color::White);
+    testEntity2.setPosition(200, 200);
+    testEntity2.setSize(sf::Vector2f(100, 2));
 
     while (window.isOpen())
     {
@@ -83,6 +97,8 @@ int main()
         {
             window.draw(*g);
         }
+        window.draw(testEntity);
+        window.draw(testEntity2);
 
         window.display();
     }
