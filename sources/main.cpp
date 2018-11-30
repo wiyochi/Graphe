@@ -1,4 +1,5 @@
 #include <iostream>
+#include <random>
 #include <SFML/Graphics.hpp>
 #include "Node.hpp"
 #include "Graph.hpp"
@@ -12,29 +13,23 @@ enum Mode
 int main()
 {
     sf::RenderWindow window(sf::VideoMode(500, 500), "Graphe");
+
+	std::default_random_engine re;
+	std::uniform_int_distribution<int> distrib{ 0 , 255 };
+
+	// TODO: Creer un objet "scene" ou "shema" qui generalise le tableau de graphs
+	// pour pouvoir utiliser correctement SELECTION et ADD_NODE
+	// et pour creer une selection de node inter-graph (surligner le node selectionné)
+
+	Mode mode = ADD_NODE;
+
     std::vector<Graph*> graphs;
     graphs.push_back(new Graph());
     int iGraph = 0;
-    Mode mode = ADD_NODE;
+	graphs[iGraph]->setColor(sf::Color(distrib(re), distrib(re), distrib(re)));
     graphs[iGraph]->addNode(100, 100);
     graphs[iGraph]->addNode(50, 50);
     graphs[iGraph]->addArc(0, 1);
-
-    sf::CircleShape mouseCenter;
-    mouseCenter.setRadius(5);
-    mouseCenter.setFillColor(sf::Color::Red);
-    mouseCenter.setPosition(80, 20);
-
-    sf::RectangleShape testEntity;
-    testEntity.setFillColor(sf::Color::White);
-    testEntity.setPosition(200, 200);
-    testEntity.setSize(sf::Vector2f(100, 2));
-    testEntity.setRotation(45.f);
-
-    sf::RectangleShape testEntity2;
-    testEntity2.setFillColor(sf::Color::White);
-    testEntity2.setPosition(200, 200);
-    testEntity2.setSize(sf::Vector2f(100, 2));
 
     while (window.isOpen())
     {
@@ -43,7 +38,6 @@ int main()
         {
             if (event.type == sf::Event::Closed || (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape))
                 window.close();
-            /*
             else if(event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
             {
                 switch(mode)
@@ -60,6 +54,7 @@ int main()
                 {
                     graphs.push_back(new Graph());
                     iGraph = graphs.size()-1;
+					graphs[iGraph]->setColor(sf::Color(distrib(re), distrib(re), distrib(re)));
                 }
                 else if(event.key.code == sf::Keyboard::Right)
                 {
@@ -82,14 +77,15 @@ int main()
                     std::cout << "Mode Add" << std::endl;
                 }
             }
-            */
-
         }
 
-        for(auto g : graphs)
-        {
-            g->update(window);
-        }
+		if (mode == SELECTION)
+		{
+			for (auto g : graphs)
+			{
+				g->update(window);
+			}
+		}
 
         window.clear();
         
@@ -97,8 +93,6 @@ int main()
         {
             window.draw(*g);
         }
-        window.draw(testEntity);
-        window.draw(testEntity2);
 
         window.display();
     }

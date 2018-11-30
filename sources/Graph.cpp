@@ -2,7 +2,8 @@
 
 int Graph::graphNumber = 0;
 
-Graph::Graph()
+Graph::Graph() :
+	m_color(sf::Color::White)
 {
     m_ID = ++graphNumber;
 }
@@ -21,6 +22,7 @@ void Graph::addNode(int x, int y)
             << " : "\
             << getNodeCount()\
             << std::endl;
+	m_nodes[m_nodes.size() - 1]->setColor(m_color);
 }
 
 void Graph::addArc(int iNode1, int iNode2)
@@ -42,6 +44,15 @@ std::size_t Graph::getNodeCount() const
 std::size_t Graph::getArcCount() const
 {
     return m_arcs.size();
+}
+
+void Graph::setColor(sf::Color c)
+{
+	m_color = c;
+	for (auto node : m_nodes)
+	{
+		node->setColor(m_color);
+	}
 }
 
 void Graph::update(sf::Window& window)

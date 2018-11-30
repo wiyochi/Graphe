@@ -3,3 +3,7 @@ bin/
 makefile
 .vscode/
 Graphe.code-workspace
+Graphe.sln
+Graphe.vcxproj
+Graphe.vcxproj.filters
+Graphe.vcxproj.user

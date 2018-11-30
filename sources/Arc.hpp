@@ -3,7 +3,8 @@
 
 #include <iostream>
 #include <string>
-#include <math.h>
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include <SFML/Graphics.hpp>
 #include "Node.hpp"
 
@@ -13,8 +14,7 @@ public:
     enum ORIENTATION
     {
         UNDIRECTED,
-        DIRECTED_R,
-        DIRECTED_L
+        DIRECTED
     };
 
     Arc(Node* n1, Node* n2, ORIENTATION o);

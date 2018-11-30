@@ -15,6 +15,9 @@ public:
     void update(sf::Window& window);
     bool containPoint(int x, int y);
     sf::Vector2f getPosition();
+	void setColor(sf::Color c);
+
+	static bool dragging;
 
 private:
     sf::CircleShape m_shape;

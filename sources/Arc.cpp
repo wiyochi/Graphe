@@ -36,7 +36,7 @@ void Arc::update()
 
     m_shape.setPosition(pFirst);
     m_shape.setSize(sf::Vector2f(hypotenuse, 2));
-    m_shape.setRotation(std::acos(diffX / hypotenuse) * 180 / M_PI);
+    m_shape.setRotation((pSecond.y < pFirst.y) ? (360 - (std::acos(diffX / hypotenuse) * 180 / M_PI)) : (std::acos(diffX / hypotenuse) * 180 / M_PI));
 }
 
 

@@ -16,6 +16,7 @@ public:
     void addArc(int x, int y);
     std::size_t getNodeCount() const;
     std::size_t getArcCount() const;
+	void setColor(sf::Color);
 
     void update(sf::Window& window);
     int getID() const;
@@ -28,6 +29,7 @@ private:
     int m_ID;
     std::vector<Node*> m_nodes;
     std::vector<Arc*> m_arcs;
+	sf::Color m_color;
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
