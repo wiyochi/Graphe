@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "Node.hpp"
 #include "Graph.hpp"
+#include "Diagram.h"
 
 enum Mode
 {
@@ -14,14 +15,15 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(500, 500), "Graphe");
 
-	std::default_random_engine re;
-	std::uniform_int_distribution<int> distrib{ 0 , 255 };
+	//std::default_random_engine re;
+	//std::uniform_int_distribution<int> distrib{ 0 , 255 };
 
 	// TODO: Creer un objet "scene" ou "shema" qui generalise le tableau de graphs
 	// pour pouvoir utiliser correctement SELECTION et ADD_NODE
 	// et pour creer une selection de node inter-graph (surligner le node selectionné)
 
-	Mode mode = ADD_NODE;
+	/*
+	Mode mode = SELECTION;
 
     std::vector<Graph*> graphs;
     graphs.push_back(new Graph());
@@ -30,6 +32,8 @@ int main()
     graphs[iGraph]->addNode(100, 100);
     graphs[iGraph]->addNode(50, 50);
     graphs[iGraph]->addArc(0, 1);
+	*/
+	Diagram* diagram = new Diagram();
 
     while (window.isOpen())
     {
@@ -38,7 +42,7 @@ int main()
         {
             if (event.type == sf::Event::Closed || (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape))
                 window.close();
-            else if(event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+            /*else if(event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
             {
                 switch(mode)
                 {
@@ -76,23 +80,26 @@ int main()
                     mode = ADD_NODE;
                     std::cout << "Mode Add" << std::endl;
                 }
-            }
+            }*/
         }
 
+		/*
 		if (mode == SELECTION)
 		{
 			for (auto g : graphs)
 			{
 				g->update(window);
 			}
-		}
+		}*/
+		diagram->update(window);
 
         window.clear();
         
-        for(auto g : graphs)
+        /*for(auto g : graphs)
         {
             window.draw(*g);
-        }
+        }*/
+		window.draw(*diagram);
 
         window.display();
     }

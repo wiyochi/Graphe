@@ -14,9 +14,11 @@ public:
     ~Graph();
     void addNode(int x, int y);
     void addArc(int x, int y);
+	void addArc(Node* n1, Node* n2);
     std::size_t getNodeCount() const;
     std::size_t getArcCount() const;
 	void setColor(sf::Color);
+	bool contain(Node * node);
 
     void update(sf::Window& window);
     int getID() const;

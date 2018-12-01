@@ -36,6 +36,20 @@ void Graph::addArc(int iNode1, int iNode2)
             << std::endl;
 }
 
+void Graph::addArc(Node * n1, Node * n2)
+{
+	if (contain(n1) && contain(n2))
+	{
+		m_arcs.push_back(new Arc(n1, n2, Arc::UNDIRECTED));
+		std::cout << "Ajout Arc (" << getID() << ") : "\
+			<< n1\
+			<< "," << n2\
+			<< " : "\
+			<< getArcCount()\
+			<< std::endl;
+	}
+}
+
 std::size_t Graph::getNodeCount() const
 {
     return m_nodes.size();
@@ -53,6 +67,16 @@ void Graph::setColor(sf::Color c)
 	{
 		node->setColor(m_color);
 	}
+}
+
+bool Graph::contain(Node * node)
+{
+	bool c = false;
+	for (auto n : m_nodes)
+	{
+		c = c || (n == node);
+	}
+	return c;
 }
 
 void Graph::update(sf::Window& window)
