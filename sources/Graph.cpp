@@ -27,18 +27,13 @@ void Graph::addNode(int x, int y)
 
 void Graph::addArc(int iNode1, int iNode2)
 {
-    m_arcs.push_back(new Arc(m_nodes[iNode1], m_nodes[iNode2], Arc::UNDIRECTED));
-    std::cout << "Ajout Arc (" << getID() << ") : "\
-            << iNode1\
-            << "," << iNode2\
-            << " : "\
-            << getArcCount()\
-            << std::endl;
+	if (iNode1 >= 0 && iNode1 < m_nodes.size() && iNode2 >= 0 && iNode2 < m_nodes.size())
+		addArc(m_nodes[iNode1], m_nodes[iNode2]);
 }
 
 void Graph::addArc(Node * n1, Node * n2)
 {
-	if (contain(n1) && contain(n2))
+	if (contain(n1) && contain(n2) && !(n1->gotNeighbor(n2)) && !(n2->gotNeighbor(n1)))
 	{
 		m_arcs.push_back(new Arc(n1, n2, Arc::UNDIRECTED));
 		std::cout << "Ajout Arc (" << getID() << ") : "\
@@ -74,7 +69,7 @@ bool Graph::contain(Node * node)
 	bool c = false;
 	for (auto n : m_nodes)
 	{
-		c = c || (n == node);
+		c = (c || (n == node));
 	}
 	return c;
 }

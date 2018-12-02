@@ -5,6 +5,7 @@
 
 #include <math.h>
 #include <iostream>
+#include <vector>
 #include <SFML/Graphics.hpp>
 
 class Node : public sf::Drawable
@@ -20,6 +21,8 @@ public:
 	void setColor(sf::Color c);
 	void select();
 	void unselect();
+	void addNeighbor(Node* n);
+	bool gotNeighbor(Node* n);
 
 	static bool dragging;
 
@@ -27,6 +30,8 @@ private:
     sf::CircleShape m_shape;
     bool m_dragged;
 	bool m_selected;
+
+	std::vector<Node*> m_neighborhood;
 
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

@@ -31,9 +31,11 @@ private:
 	int m_iGraph;
 	Mode m_mode;
 
+	Graph* m_selectedGraph;
 	Node* m_selectedNode;
 	std::pair<Node*, Node*> m_nodesForArc;
 	int m_switchOT;
+	void unselectAll();
 
 	// Simulate keyReleased
 	bool m_mousePressed;

@@ -3,6 +3,7 @@
 Diagram::Diagram() :
 	m_iGraph(-1),
 	m_mode(Diagram::SELECTION),
+	m_selectedGraph(nullptr),
 	m_selectedNode(nullptr),
 	m_nodesForArc(nullptr, nullptr),
 	m_switchOT(0)
@@ -60,6 +61,7 @@ void Diagram::update(sf::RenderWindow& window)
 							m_nodesForArc.second->select();
 							m_switchOT = 0;
 						}
+						m_selectedGraph = g;
 					}
 				}
 			}
@@ -76,6 +78,7 @@ void Diagram::update(sf::RenderWindow& window)
 						if (m_selectedNode) m_selectedNode->unselect();
 						m_selectedNode = (*g)[i];
 						m_selectedNode->select();
+						m_selectedGraph = g;
 					}
 				}
 			}
@@ -110,13 +113,7 @@ void Diagram::update(sf::RenderWindow& window)
 		{
 			m_keyboardPressed = true;
 			m_mode = Diagram::SELECTION;
-			for (auto g : m_graphs)
-			{
-				for (int i = 0; i < g->getNodeCount(); i++)
-				{
-					(*g)[i]->unselect();
-				}
-			}
+			unselectAll();
 			std::cout << "Mode Selection" << std::endl;
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad1))
@@ -135,20 +132,15 @@ void Diagram::update(sf::RenderWindow& window)
 		{
 			m_keyboardPressed = true;
 			m_mode = Diagram::ADD_ARC;
-			for (auto g : m_graphs)
-			{
-				for (int i = 0; i < g->getNodeCount(); i++)
-				{
-					(*g)[i]->unselect();
-				}
-			}
+			unselectAll();
 			std::cout << "Mode Add arc" << std::endl;
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::V))
 		{
 			m_keyboardPressed = true;
-			if (m_mode == Diagram::ADD_ARC)
+			if (m_mode == Diagram::ADD_ARC && m_nodesForArc.first && m_nodesForArc.second)
 			{
+				m_selectedGraph->addArc(m_nodesForArc.first, m_nodesForArc.second);
 			}
 		}
 	}
@@ -187,4 +179,19 @@ void Diagram::draw(sf::RenderTarget & target, sf::RenderStates states) const
 	{
 		target.draw(*g, states);
 	}
+}
+
+void Diagram::unselectAll()
+{
+	for (auto g : m_graphs)
+	{
+		for (int i = 0; i < g->getNodeCount(); i++)
+		{
+			(*g)[i]->unselect();
+		}
+	}
+	m_selectedGraph = nullptr;
+	m_selectedNode = nullptr;
+	m_nodesForArc.first = nullptr;
+	m_nodesForArc.second = nullptr;
 }

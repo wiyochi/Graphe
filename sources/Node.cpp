@@ -90,6 +90,21 @@ void Node::unselect()
 	m_shape.setOutlineThickness(0);
 }
 
+void Node::addNeighbor(Node * n)
+{
+	m_neighborhood.push_back(n);
+}
+
+bool Node::gotNeighbor(Node * n)
+{
+	bool c = false;
+	for (auto node : m_neighborhood)
+	{
+		c = (c || (n == node));
+	}
+	return c;
+}
+
 
 void Node::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {

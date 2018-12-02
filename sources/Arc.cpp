@@ -5,6 +5,8 @@ Arc::Arc(Node* n1, Node* n2, Arc::ORIENTATION o) :
     m_orientation(o)
 {
     m_shape.setFillColor(sf::Color::White);
+	n1->addNeighbor(n2);
+	n2->addNeighbor(n1);
 }
 
 Arc::~Arc()
