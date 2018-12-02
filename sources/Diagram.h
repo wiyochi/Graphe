@@ -13,6 +13,8 @@ public:
 	enum Mode
 	{
 		ADD_NODE,
+		ADD_ARC,
+		MOVE_NODE,
 		SELECTION
 	};
 
@@ -28,6 +30,10 @@ private:
 	std::vector<Graph*> m_graphs;
 	int m_iGraph;
 	Mode m_mode;
+
+	Node* m_selectedNode;
+	std::pair<Node*, Node*> m_nodesForArc;
+	int m_switchOT;
 
 	// Simulate keyReleased
 	bool m_mousePressed;

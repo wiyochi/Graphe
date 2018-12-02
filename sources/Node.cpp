@@ -4,10 +4,12 @@ bool Node::dragging = false;
 
 Node::Node(int x, int y) :
     m_shape(10.f),
-    m_dragged(false)
+    m_dragged(false),
+	m_selected(false)
 {
     m_shape.setFillColor(sf::Color::White);
     m_shape.setPosition(x, y);
+	m_shape.setOutlineColor(sf::Color::White);
 }
 
 Node::~Node()
@@ -17,21 +19,40 @@ Node::~Node()
 
 void Node::update(sf::Window& window)
 {
+}
+
+void Node::drag(int mouseX, int mouseY)
+{
 	if (!dragging || m_dragged)
 	{
-		if (!m_dragged && sf::Mouse::isButtonPressed(sf::Mouse::Left) && containPoint(sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y))
+		if (!m_dragged && sf::Mouse::isButtonPressed(sf::Mouse::Left) && containPoint(mouseX, mouseY))
 		{
 			m_dragged = true;
 			dragging = true;
 		}
 		else if (m_dragged && sf::Mouse::isButtonPressed(sf::Mouse::Left))
 		{
-			m_shape.setPosition(sf::Mouse::getPosition(window).x - m_shape.getRadius(), sf::Mouse::getPosition(window).y - m_shape.getRadius());
+			m_shape.setPosition(mouseX - m_shape.getRadius(), mouseY - m_shape.getRadius());
 		}
 		else
 		{
 			m_dragged = false;
 			dragging = false;
+		}
+	}
+}
+
+void Node::mouseOn(int mouseX, int mouseY)
+{
+	if (!m_selected)
+	{
+		if (containPoint(mouseX, mouseY) && !dragging)
+		{
+			m_shape.setOutlineThickness(1);
+		}
+		else
+		{
+			m_shape.setOutlineThickness(0);
 		}
 	}
 }
@@ -53,6 +74,20 @@ sf::Vector2f Node::getPosition()
 void Node::setColor(sf::Color c)
 {
 	m_shape.setFillColor(c);
+}
+
+void Node::select()
+{
+	m_selected = true;
+	m_shape.setOutlineColor(sf::Color::Red);
+	m_shape.setOutlineThickness(1);
+}
+
+void Node::unselect()
+{
+	m_selected = false;
+	m_shape.setOutlineColor(sf::Color::White);
+	m_shape.setOutlineThickness(0);
 }
 
 
