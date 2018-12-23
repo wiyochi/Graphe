@@ -1,5 +1,5 @@
-#ifndef DIAGRAM_H
-#define DIAGRAM_H
+#if !defined(_DIAGRAM_H_)
+#define _DIAGRAM_H_
 
 #include <iostream>
 #include <vector>
@@ -43,4 +43,4 @@ private:
 	std::uniform_int_distribution<int> distrib{ 0 , 255 };
 };
 
-#endif // !DIAGRAM_H
+#endif // _DIAGRAM_H_

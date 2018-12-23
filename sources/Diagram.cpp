@@ -1,4 +1,4 @@
-#include "Diagram.h"
+#include "Diagram.hpp"
 
 Diagram::Diagram() :
 	m_iGraph(-1),
@@ -42,7 +42,7 @@ void Diagram::update(sf::RenderWindow& window)
 		case ADD_ARC:
 			for (auto g : m_graphs)
 			{
-				for (int i = 0; i < g->getNodeCount(); i++)
+				for (uint i = 0; i < g->getNodeCount(); i++)
 				{
 					if ((*g)[i]->containPoint(mouseX, mouseY))
 					{
@@ -69,7 +69,7 @@ void Diagram::update(sf::RenderWindow& window)
 		case SELECTION:
 			for (auto g : m_graphs)
 			{
-				for (int i = 0; i < g->getNodeCount(); i++)
+				for (uint i = 0; i < g->getNodeCount(); i++)
 				{
 					if ((*g)[i]->containPoint(mouseX, mouseY))
 					{
@@ -112,7 +112,7 @@ void Diagram::update(sf::RenderWindow& window)
 			m_mode = Diagram::SELECTION;
 			for (auto g : m_graphs)
 			{
-				for (int i = 0; i < g->getNodeCount(); i++)
+				for (uint i = 0; i < g->getNodeCount(); i++)
 				{
 					(*g)[i]->unselect();
 				}
@@ -137,7 +137,7 @@ void Diagram::update(sf::RenderWindow& window)
 			m_mode = Diagram::ADD_ARC;
 			for (auto g : m_graphs)
 			{
-				for (int i = 0; i < g->getNodeCount(); i++)
+				for (uint i = 0; i < g->getNodeCount(); i++)
 				{
 					(*g)[i]->unselect();
 				}
@@ -149,6 +149,7 @@ void Diagram::update(sf::RenderWindow& window)
 			m_keyboardPressed = true;
 			if (m_mode == Diagram::ADD_ARC)
 			{
+				m_graphs[m_iGraph]->addArc(m_nodesForArc.first, m_nodesForArc.second);
 			}
 		}
 	}
@@ -165,7 +166,7 @@ void Diagram::update(sf::RenderWindow& window)
 	{
 		for (auto g : m_graphs)
 		{
-			for (int i = 0; i < g->getNodeCount(); i++)
+			for (uint i = 0; i < g->getNodeCount(); i++)
 			{
 				(*g)[i]->drag(mouseX, mouseY);
 				(*g)[i]->mouseOn(mouseX, mouseY);

@@ -3,9 +3,7 @@
 bool Node::dragging = false;
 
 Node::Node(int x, int y) :
-    m_shape(10.f),
-    m_dragged(false),
-	m_selected(false)
+    m_shape(10.f)
 {
     m_shape.setFillColor(sf::Color::White);
     m_shape.setPosition(x, y);
@@ -62,7 +60,6 @@ bool Node::containPoint(int x, int y)
     sf::Vector2f center = getPosition();
 
     float distance = std::sqrt((center.x - x)*(center.x - x) + (center.y - y)*(center.y - y));
-    //std::cout << "Distance: " << PT("Center", center.x, center.y) << "&" << PT("Point", x, y) << std::endl;
     return (distance <= m_shape.getRadius());
 }
 
@@ -86,10 +83,20 @@ void Node::select()
 void Node::unselect()
 {
 	m_selected = false;
-	m_shape.setOutlineColor(sf::Color::White);
+	m_shape.setOutlineColor(sf::Color::Transparent);
 	m_shape.setOutlineThickness(0);
 }
 
+bool Node::isIn(sf::FloatRect rect)
+{
+	sf::Vector2f pos(getPosition());
+
+	return (rect.contains(pos.x + m_shape.getRadius(), pos.y)\
+		&& rect.contains(pos.x - m_shape.getRadius(), pos.y)\
+		&& rect.contains(pos.x, pos.y + m_shape.getRadius())\
+		&& rect.contains(pos.x, pos.y - m_shape.getRadius())\
+	);
+}
 
 void Node::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
