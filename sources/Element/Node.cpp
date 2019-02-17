@@ -3,11 +3,14 @@
 bool Node::dragging = false;
 
 Node::Node(int x, int y) :
-    m_shape(10.f)
+    m_shape(10.f),
+	m_dragged(false)
 {
     m_shape.setFillColor(sf::Color::White);
     m_shape.setPosition(x, y);
 	m_shape.setOutlineColor(sf::Color::White);
+
+	m_selected = false;
 }
 
 Node::~Node()

@@ -10,7 +10,15 @@ Graph::Graph() :
 
 Graph::~Graph()
 {
-    
+    for(auto n : m_nodes)
+    {
+        delete n;
+    }
+
+    for(auto a : m_arcs)
+    {
+        delete a;
+    }
 }
 
 void Graph::addNode(int x, int y)
