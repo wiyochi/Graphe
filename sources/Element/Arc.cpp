@@ -41,6 +41,28 @@ void Arc::update()
     m_shape.setRotation((pSecond.y < pFirst.y) ? (360 - (std::acos(diffX / hypotenuse) * 180 / M_PI)) : (std::acos(diffX / hypotenuse) * 180 / M_PI));
 }
 
+void Arc::select()
+{
+    m_selected = true;
+    m_shape.setOutlineColor(sf::Color::Red);
+    m_shape.setOutlineThickness(1);
+}
+
+void Arc::unselect()
+{
+    m_selected = false;
+	m_shape.setOutlineColor(sf::Color::Transparent);
+	m_shape.setOutlineThickness(0);
+}
+
+bool Arc::isIn(sf::FloatRect rect)
+{
+    sf::Vector2f pos(m_shape.getPosition());
+    return (rect.contains(pos)\
+        && rect.contains(pos.x + m_shape.getSize().x, pos.y + m_shape.getSize().y)
+    );
+}
+
 
 void Arc::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {

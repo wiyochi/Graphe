@@ -1,11 +1,11 @@
-#ifndef GRAPH_H
-#define GRAPH_H
+#if !defined(_GRAPH_H_)
+#define _GRAPH_H_
 
 #include <iostream>
 #include <string>
 #include <SFML/Graphics.hpp>
-#include "Node.hpp"
-#include "Arc.hpp"
+#include "Element/Node.hpp"
+#include "Element/Arc.hpp"
 
 class Graph : public sf::Drawable
 {
@@ -36,4 +36,4 @@ private:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
-#endif // !GRAPH_H
+#endif // _GRAPH_H_

@@ -1,5 +1,5 @@
-#ifndef ARC_H
-#define ARC_H
+#if !defined(_ARC_H_)
+#define _ARC_H_
 
 #include <iostream>
 #include <string>
@@ -7,8 +7,9 @@
 #include <cmath>
 #include <SFML/Graphics.hpp>
 #include "Node.hpp"
+#include "Element.hpp"
 
-class Arc : public sf::Drawable
+class Arc : public Element
 {
 public:
     enum ORIENTATION
@@ -17,7 +18,7 @@ public:
         DIRECTED
     };
 
-    Arc(Node* n1, Node* n2, ORIENTATION o);
+    Arc(Node*, Node*, ORIENTATION);
     ~Arc();
 
     Node* getFirstNode() const;
@@ -26,13 +27,18 @@ public:
 
     void update();
 
+    // Element methods
+	void select() override;
+	void unselect() override;
+    bool isIn(sf::FloatRect) override;
+
 private:
     std::pair<Node*, Node*> m_nodes;
     ORIENTATION m_orientation;
     sf::RectangleShape m_shape;
 
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    void draw(sf::RenderTarget&, sf::RenderStates) const;
 
 };
 
-#endif // !ARC_H
+#endif // _ARC_H_

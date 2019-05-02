@@ -1,4 +1,4 @@
-#include "Diagram.h"
+#include "Diagram.hpp"
 
 Diagram::Diagram() :
 	m_iGraph(-1),
@@ -6,7 +6,9 @@ Diagram::Diagram() :
 	m_selectedGraph(nullptr),
 	m_selectedNode(nullptr),
 	m_nodesForArc(nullptr, nullptr),
-	m_switchOT(0)
+	m_switchOT(0),
+	m_mousePressed(false),
+	m_keyboardPressed(false)
 {
 	addGraph();
 	m_graphs[m_iGraph]->addNode(100, 100);
@@ -16,6 +18,10 @@ Diagram::Diagram() :
 
 Diagram::~Diagram()
 {
+	for(auto g : m_graphs)
+	{
+		delete g;
+	}
 }
 
 
@@ -43,7 +49,7 @@ void Diagram::update(sf::RenderWindow& window)
 		case ADD_ARC:
 			for (auto g : m_graphs)
 			{
-				for (int i = 0; i < g->getNodeCount(); i++)
+				for (unsigned int i = 0; i < g->getNodeCount(); i++)
 				{
 					if ((*g)[i]->containPoint(mouseX, mouseY))
 					{
@@ -71,7 +77,7 @@ void Diagram::update(sf::RenderWindow& window)
 		case SELECTION:
 			for (auto g : m_graphs)
 			{
-				for (int i = 0; i < g->getNodeCount(); i++)
+				for (unsigned int i = 0; i < g->getNodeCount(); i++)
 				{
 					if ((*g)[i]->containPoint(mouseX, mouseY))
 					{
@@ -157,7 +163,7 @@ void Diagram::update(sf::RenderWindow& window)
 	{
 		for (auto g : m_graphs)
 		{
-			for (int i = 0; i < g->getNodeCount(); i++)
+			for (unsigned int i = 0; i < g->getNodeCount(); i++)
 			{
 				(*g)[i]->drag(mouseX, mouseY);
 				(*g)[i]->mouseOn(mouseX, mouseY);
