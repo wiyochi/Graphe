@@ -152,7 +152,7 @@ void Diagram::update(sf::RenderWindow& window)
 		m_keyboardPressed = false;
 	}
 
-	// If selection, treatments for dragging nodes
+	// If move mode, treatments for dragging nodes
 	if(m_mode == MOVE_NODE)
 	{
 		for (auto g : m_graphs)
