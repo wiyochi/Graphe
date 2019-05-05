@@ -4,7 +4,8 @@ Arc::Arc(Node* n1, Node* n2, Arc::ORIENTATION o) :
     m_nodes(n1, n2),
     m_orientation(o)
 {
-    m_shape.setFillColor(sf::Color::White);
+	m_line[0] = sf::Vertex(n1->getPosition());
+	m_line[1] = sf::Vertex(n2->getPosition());
 	n1->addNeighbor(n2);
 	n2->addNeighbor(n1);
 }
@@ -30,41 +31,31 @@ Arc::ORIENTATION Arc::getOrientation() const
 
 void Arc::update()
 {
-    sf::Vector2f pFirst = m_nodes.first->getPosition();
-    sf::Vector2f pSecond = m_nodes.second->getPosition();
-    double diffX = pSecond.x - pFirst.x;
-    double diffY = pSecond.y - pFirst.y;
-    double hypotenuse = std::sqrt(diffX*diffX + diffY*diffY);
-
-    m_shape.setPosition(pFirst);
-    m_shape.setSize(sf::Vector2f(hypotenuse, 2));
-    m_shape.setRotation((pSecond.y < pFirst.y) ? (360 - (std::acos(diffX / hypotenuse) * 180 / M_PI)) : (std::acos(diffX / hypotenuse) * 180 / M_PI));
+	m_line[0] = sf::Vertex(m_nodes.first->getPosition());
+	m_line[1] = sf::Vertex(m_nodes.second->getPosition());
 }
 
 void Arc::select()
 {
     m_selected = true;
-    m_shape.setOutlineColor(sf::Color::Red);
-    m_shape.setOutlineThickness(1);
+	m_line[0].color = sf::Color::Red;
+	m_line[1].color = sf::Color::Red;
 }
 
 void Arc::unselect()
 {
     m_selected = false;
-	m_shape.setOutlineColor(sf::Color::Transparent);
-	m_shape.setOutlineThickness(0);
+	m_line[0].color = sf::Color::White;
+	m_line[1].color = sf::Color::White;
 }
 
 bool Arc::isIn(sf::FloatRect rect)
 {
-    sf::Vector2f pos(m_shape.getPosition());
-    return (rect.contains(pos)\
-        && rect.contains(pos.x + m_shape.getSize().x, pos.y + m_shape.getSize().y)
-    );
+	return(rect.contains(m_line[0].position) && rect.contains(m_line[1].position));
 }
 
 
 void Arc::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    target.draw(m_shape, states);
+	target.draw(m_line, 2, sf::Lines, states);
 }

@@ -106,13 +106,13 @@ void Diagram::update(sf::RenderWindow& window)
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 		{
 			m_keyboardPressed = true;
-			m_iGraph = (m_iGraph + 1) % m_graphs.size();
+			m_iGraph = ((__int64)m_iGraph + 1) % m_graphs.size();
 			std::cout << "Changement sur le graphe " << m_graphs[m_iGraph]->getID() << std::endl;
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 		{
 			m_keyboardPressed = true;
-			m_iGraph = (m_iGraph - 1) < 0 ? m_graphs.size() - 1 : (m_iGraph - 1);
+			m_iGraph = (m_iGraph - 1) < 0 ? m_graphs.size() - 1 : ((__int64)m_iGraph - 1);
 			std::cout << "Changement sur le graphe " << m_graphs[m_iGraph]->getID() << std::endl;
 		}
 		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Numpad0))

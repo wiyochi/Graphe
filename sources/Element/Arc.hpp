@@ -35,7 +35,7 @@ public:
 private:
     std::pair<Node*, Node*> m_nodes;
     ORIENTATION m_orientation;
-    sf::RectangleShape m_shape;
+	sf::Vertex m_line[2];
 
     void draw(sf::RenderTarget&, sf::RenderStates) const;
 

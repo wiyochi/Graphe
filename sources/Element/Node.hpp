@@ -7,8 +7,9 @@
 #include <iostream>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include "Element.hpp"
 
-class Node : public sf::Drawable
+class Node : public Element
 {
 public:
     Node(int x, int y);
@@ -19,10 +20,16 @@ public:
     bool containPoint(int x, int y);
     sf::Vector2f getPosition();
 	void setColor(sf::Color c);
-	void select();
-	void unselect();
+
 	void addNeighbor(Node* n);
 	bool gotNeighbor(Node* n);
+	void removeNeighbor(Node* n);
+	int indNeighbor(Node* n);
+
+	// Element methods
+	void select() override;
+	void unselect() override;
+	bool isIn(sf::FloatRect) override;
 
 	static bool dragging;
 

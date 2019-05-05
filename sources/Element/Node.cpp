@@ -90,7 +90,6 @@ void Node::unselect()
 	m_shape.setOutlineThickness(0);
 }
 
-//<<<<<<< HEAD:sources/Node.cpp
 void Node::addNeighbor(Node * n)
 {
 	m_neighborhood.push_back(n);
@@ -106,7 +105,22 @@ bool Node::gotNeighbor(Node * n)
 	return c;
 }
 
-/*=======
+// A TESTER
+void Node::removeNeighbor(Node* n)
+{
+	if (gotNeighbor(n))
+		m_neighborhood.erase(m_neighborhood.cbegin() + indNeighbor(n));
+}
+
+// A TESTER
+int Node::indNeighbor(Node* n)
+{
+	unsigned int i = 0;
+	while (i < m_neighborhood.size() && m_neighborhood[i] != n)
+		i++;
+	return (m_neighborhood[i] == n ? i : -1);
+}
+
 bool Node::isIn(sf::FloatRect rect)
 {
 	sf::Vector2f pos(getPosition());
@@ -117,7 +131,6 @@ bool Node::isIn(sf::FloatRect rect)
 		&& rect.contains(pos.x, pos.y - m_shape.getRadius())\
 	);
 }
->>>>>>> 20151242df677e24763fc4fe638c5aca929bc8e6:sources/Element/Node.cpp*/
 
 void Node::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
